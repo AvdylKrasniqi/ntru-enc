@@ -25,6 +25,10 @@ public class Main {
         for(byte b: enc) {
             System.out.printf("%02X", b);
         }
+        byte[] dec = ntru.decrypt(enc, keyPair);
+
+        System.out.println("\nMesazhi i dekriptuar:  " + new String(dec));
+
     }
     public static void main(String[] args) {
 

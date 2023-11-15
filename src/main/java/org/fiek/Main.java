@@ -3,35 +3,35 @@ package org.fiek;
 import net.sf.ntru.encrypt.EncryptionKeyPair;
 import net.sf.ntru.encrypt.EncryptionParameters;
 import net.sf.ntru.encrypt.NtruEncrypt;
-import net.sf.ntru.sign.NtruSign;
-import net.sf.ntru.sign.SignatureKeyPair;
-import net.sf.ntru.sign.SignatureParameters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
 
-    private static void encrypt(String msg) {
-        NtruEncrypt ntru = new NtruEncrypt(EncryptionParameters.EES1087EP2_FAST);
-        EncryptionKeyPair keyPair = ntru.generateKeyPair();
+    public ArrayList<User> users;
+    static String availableOptions = "1) Listo përdoruesit e regjistruar" +
+            "\n2) Krijo një përdorues" +
+            "\n3) Shto një përdorues" +
+            "\n4) Enkripto një mesazh" +
+            "\n5) Dekripto një mesazh" +
+            "\n6) Dilni";
 
-        System.out.println("Mesazhi plain: " + msg);
-
-        // encrypt the message with the public key created above
-        byte[] enc = ntru.encrypt(msg.getBytes(), keyPair.getPublic());
-
-        System.out.println("Mesazhi i enkriptuar [byte data]: " + Arrays.toString(enc));
-        System.out.print("Mesazhi i enkriptuar [HEX data]: ");
-        for(byte b: enc) {
-            System.out.printf("%02X", b);
-        }
-        byte[] dec = ntru.decrypt(enc, keyPair);
-
-        System.out.println("\nMesazhi i dekriptuar:  " + new String(dec));
-
-    }
     public static void main(String[] args) {
 
-        encrypt("Hello From FIEK!");
+        Scanner sc = new Scanner(System.in);
+        while(true) {
+            System.out.println("-----------------");
+            System.out.println("FIEK ~ MASTER 2023");
+            System.out.println("-----------------");
+            System.out.println("Mirësevini në FIEK-nTRU, zgjidhni veprimin që dëshironi të veproni");
+            System.out.println(availableOptions);
+            System.out.println("Opcioni juaj?: ");
+
+            String selectedOption = sc.nextLine();
+
+        }
+
     }
 }

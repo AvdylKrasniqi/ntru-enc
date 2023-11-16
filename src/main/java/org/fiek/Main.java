@@ -17,7 +17,7 @@ public class Main {
             "\n3) Shiko public key të një përdorues" +
             "\n4) Enkripto një mesazh" +
             "\n5) Dekripto një mesazh" +
-            "\n5) Shiko qelesin publik te nje perdoruesit" +
+            "\n6) Shiko privat key te nje perdoruesit" +
             "\n100) Dilni";
 
     public static User findUserByUsername(String username) {
@@ -50,7 +50,15 @@ public class Main {
             else if(selectedOption.equals("2")) {
                 try {
                     User u = User.registerForm(sc);
-                    if(u != null) users.add(u);
+                    if(u == null) {
+                        System.out.println("Nuk u shtua perdoruesi");
+                    }
+                    else if (findUserByUsername(u.getUsername()) != null){
+                        System.out.println("Ky username tani me eshte e nxene!");
+                    }
+                    else {
+                        users.add(u);
+                    }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -100,7 +108,7 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Shkrunai emrin e perdoruesit me qelësat e të cilit do të dekriptoni mesazhin");
+                    System.out.println("Shkrunai emrin e perdoruesit të cilit dëshironi të shihni qelësin publik");
                     String username = sc.nextLine().trim();
 
                     u = findUserByUsername(username);
@@ -116,6 +124,22 @@ public class Main {
                             System.out.println(e.getMessage());
                         }
                     };
+                }
+            }
+            else if(selectedOption.equals("6")) {
+                User u = null;
+                while (u == null) {
+
+                    if(users.size() == 0) {
+                        System.out.println("Nuk ekziston ende ndonje perdorues");
+                        break;
+                    }
+
+                    System.out.println("Shkrunai emrin e perdoruesit");
+                    String username = sc.nextLine().trim();
+                    u = findUserByUsername(username);
+                    if(u == null) System.out.println("Ky perdorues nuk ekziston!");
+                    else System.out.println(u.getPrivateKeyAsString());
                 }
             }
             else if(selectedOption.equals("100")) {

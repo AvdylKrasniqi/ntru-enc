@@ -29,6 +29,7 @@ public class User {
                     String privKey = scanner.nextLine().trim();
                     System.out.println("Shkruani public key");
                     String pubKey = scanner.nextLine().trim();
+
                     try {
                         kp = new EncryptionKeyPair(
                                 new EncryptionPrivateKey(HexUtil.hexStringToByteArray(privKey)),
@@ -37,6 +38,11 @@ public class User {
                         break;
                     } catch (Exception e) {
                         System.out.println("Ju lutem vendosni qelesa valid");
+                        System.out.println("Deshironi te vazhdoni? (Yes/No)");
+                        String _continue = scanner.nextLine().trim();
+                        if(_continue.equalsIgnoreCase("no")) {
+                            return null;
+                        }
                     }
                 }
             } else if(selectedOption.equals("3")) {
@@ -52,6 +58,7 @@ public class User {
                         break;
                     } catch (Exception e) {
                         System.out.println("Ju lutem vendosni qelesa valid");
+                        System.out.println("Deshironi te vazhdoni? (Po/Jo)");
                         String _continue = scanner.nextLine().trim();
                         if(_continue.equalsIgnoreCase("no")) {
                             return null;
@@ -83,6 +90,10 @@ public class User {
         return this.keyPair.getPublic();
     }
 
+     public EncryptionPrivateKey getPrivateKey() {
+        return this.keyPair.getPrivate();
+    }
+
     public String getPublicKeyAsString() {
         return HexUtil.byteArrayToHex(getPublicKey().getEncoded());
     }
@@ -97,6 +108,10 @@ public class User {
         return new String(ntru.decrypt(encryptedText, keyPair));
     }
 
+    public String getPrivateKeyAsString() {
+        return HexUtil.byteArrayToHex(getPrivateKey().getEncoded());
+    }
+
 
     public String getUsername() {
         return this.username;
@@ -105,7 +120,7 @@ public class User {
     @Override
     public String toString() {
         return  username +
-                (keyPair.getPrivate() != null ? " ka qeles privat" : "nuk ka qeles privat") +
+                (keyPair.getPrivate() != null ? " ka qeles privat" : " nuk ka qeles privat") +
                 " dhe " +
                ( keyPair.getPublic() != null ? " ka qeles publik"  : " nuk ka qeles publik");
     }
